@@ -1,0 +1,35 @@
+main .container {
+  display: flex;
+  flex-direction: row;
+  width: 80vw;
+  justify-content: space-around;
+  margin: 25px 0;
+}
+
+main h2 {
+  font-size: 28px;
+  text-transform: uppercase;
+  font-family: sans-serif;
+}
+
+main .container div {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  background-color: #fff;
+  height: 50vh;
+  width: 100%;
+}
+
+main .container .values .card {
+  width: 180px;
+  height: 180px;
+  margin: 30px;
+  border-radius: 20px;
+  background-color: var(--link-color);
+}
