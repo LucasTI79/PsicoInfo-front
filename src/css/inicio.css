@@ -21,15 +21,56 @@ main .container div {
 .row {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
   background-color: #fff;
   height: 50vh;
   width: 100%;
 }
 
+.row div {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 80%;
+}
+
+.row div h3 {
+  margin-bottom: 20px;
+}
+
+.row div p {
+  line-height: 1.6;
+  max-width: 60ch;
+}
+
 main .container .values .card {
-  width: 180px;
-  height: 180px;
+  width: 200px;
+  height: 200px;
   margin: 30px;
+  /* background-color: var(--secondary-color); */
+  transition: all .2s ease-in-out;
   border-radius: 20px;
-  background-color: var(--link-color);
+}
+
+main .container .values .card:hover {
+  box-shadow: .75px .75px 3px #212121;
+}
+
+main .container .values .card .content {
+  height: 80%;
+  width: 100%;
+  background-color: #f2f2f2;
+  border-radius: 20px;
+  border-radius: 20px 20px 0 0;
+  box-shadow: .5px .5px 3px #212121;
+}
+
+main .container .values .card .footer {
+  height: 20%;
+  width: 100%;
+  background-color: var(--secondary-color);
+  border-radius: 0 0 20px 20px;
+  box-shadow: .5px .5px 3px #212121;
 }

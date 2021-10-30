@@ -1,0 +1,72 @@
+main div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
+  margin-top: 20px;
+}
+
+main div form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+}
+
+main div form div {
+  margin-bottom: 10px;
+  border: solid 1px #212121;
+  border-radius: 10px;
+
+}
+
+main div form label {
+  text-transform: uppercase;
+  font-family: monospace;
+  margin-bottom: 5px;
+}
+
+main div form input {
+  display: flex;
+  align-items: center;
+  border: none;
+  border-right: solid 1px #212121;
+  border-radius: 10px 0 0 10px;
+  height: 40px;
+  width: 200px;
+  font-size: 16px;
+  font-family: monospace;
+  padding: 0 10px;
+  position: relative;
+}
+
+main div form input:focus {
+  border: none;
+}
+
+main div form div i {
+  align-self: center;
+  padding: 10px;
+}
+
+main div form button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 250px;
+  height: 40px;
+  background-color: var(--secondary-color);
+  border-radius: 10px;
+  margin-bottom: 5px;
+  font-size: 16px;
+  transition: .2s all ease-in-out;
+}
+
+main div form button i {
+  margin-left: 5px;
+}
+
+main div form button:hover {
+  box-shadow: .5px .5px 2px #212121;
+}

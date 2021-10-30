@@ -15,6 +15,16 @@
   scroll-behavior: smooth;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-transform: uppercase;
+  font-family: sans-serif;
+}
+
 a,
 button {
   text-decoration: none;
@@ -29,9 +39,52 @@ body {
   --body-bg: #FAFAFA;
   --body-color: #212121;
   --link-color: #323232;
-  --link-color-hover: #4CB4CF;
-  --link-bg-hover: #323232;
-  --primary-color: #4CB4CF;
+  --link-color-hover: hsl(192, 70%, 50%);
+  --primary-color: hsl(192, 70%, 50%);
+  --secondary-color: #FACA38;
+  --thirty-color: #EC613D;
+
+  /* 
+  #26B5D9
+  #75DBF4
+  #2CCBF2
+  #376773
+  #22A0BF
+   */
+
+  /* 
+  #FACA38
+  #F4D77F
+  #F2C335
+  #73653C
+  #BF9A2A
+  */
+
+  /* 
+  #3CC368
+  #95F4B5
+  #4BF283
+  #467355
+  #3BBF67
+   */
+
+  /* 
+   #EC613D
+   #F49E89
+   #F2633F
+   #734A40
+   #BF4E32
+    */
+
+  /*
+  #9549E6
+  #C498F4
+  #9D4EF2
+  #5C4773
+  #7C3DBF
+  */
+
+  --color-black-800: hsla(0, 0%, 0%, 0);
 }
 
 .dark-mode:root {
@@ -40,15 +93,3 @@ body {
   --link-color: #dee2e6;
   --link-color-hover: #3cc368;
 }
-
-/* 
-#4CB4CF;
-#EC613D;
-#FACA38;
-#9549E6;
-#66E649; 
-*/
-
-/*
-
-*/
