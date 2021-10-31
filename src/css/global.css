@@ -39,9 +39,9 @@ body {
   --body-bg: #FAFAFA;
   --body-color: #212121;
   --link-color: #323232;
-  --link-color-hover: hsl(192, 70%, 50%);
-  --primary-color: hsl(192, 70%, 50%);
-  --secondary-color: #FACA38;
+  --link-color-hover: #FAC938;
+  --primary-color: #FAC938;
+  --secondary-color: #FAC938;
   --thirty-color: #EC613D;
   --font-text: monospace;
   --font-link: monospace;
