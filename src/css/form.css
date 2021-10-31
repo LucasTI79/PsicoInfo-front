@@ -22,8 +22,7 @@ main div form div {
 
 main div form label {
   text-transform: uppercase;
-  font-family: monospace;
-  margin-bottom: 5px;
+  font-family: var(--font-text);
 }
 
 main div form input {
@@ -35,7 +34,7 @@ main div form input {
   height: 40px;
   width: 200px;
   font-size: 16px;
-  font-family: monospace;
+  font-family: var(--font-text);
   padding: 0 10px;
   position: relative;
 }
@@ -46,7 +45,9 @@ main div form input:focus {
 
 main div form div i {
   align-self: center;
+  justify-self: center;
   padding: 10px;
+  font-size: 12px;
 }
 
 main div form button {
@@ -58,15 +59,15 @@ main div form button {
   height: 40px;
   background-color: var(--secondary-color);
   border-radius: 10px;
-  margin-bottom: 5px;
+  margin: 10px 0 5px 0;
   font-size: 16px;
-  transition: .2s all ease-in-out;
+  transition: .5s all ease-in-out;
+}
+
+main div form button:hover {
+  box-shadow: 1px 1px 2px #212121;
 }
 
 main div form button i {
   margin-left: 5px;
-}
-
-main div form button:hover {
-  box-shadow: .5px .5px 2px #212121;
 }

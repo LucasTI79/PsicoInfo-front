@@ -22,7 +22,7 @@ h4,
 h5,
 h6 {
   text-transform: uppercase;
-  font-family: sans-serif;
+  font-family: var(--font-title);
 }
 
 a,
@@ -43,6 +43,9 @@ body {
   --primary-color: hsl(192, 70%, 50%);
   --secondary-color: #FACA38;
   --thirty-color: #EC613D;
+  --font-text: monospace;
+  --font-link: monospace;
+  --font-title: sans-serif;
 
   /* 
   #26B5D9

@@ -11,6 +11,10 @@
   <link rel="stylesheet" href="./src/css/componentes.css">
   <link rel="stylesheet" href="./src/css/inicio.css">
   <!-- Fontes -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+    integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+
+
 </head>
 
 <body>
@@ -20,14 +24,22 @@
     </div>
     <nav>
 
-      <a class="active" href="#">INICIO</a>
+      <a href="#">INICIO</a>
       |
-      <a href="#">JOGOS</a>
+      <a href="./jogos.html">JOGOS</a>
       |
-      <a href="#">SOBRE</a>
+      <a href="./blog.html">Blog</a>
+      |
+      <a href="./sobre.html">SOBRE</a>
       <div class="actions">
-        <button type="button" onclick="window.location.href='./cadastrar.html'">SIGNIN</button>
-        <button type="button" onclick="window.location.href='./login.html'">LOGIN</button>
+        <button type="button" onclick="window.location.href='./cadastro.html'">SIGNIN
+          <!-- <i class="fas fa-user-plus"></i> -->
+        </button>
+
+
+        <button type="button" onclick="window.location.href='./login.html'">LOGIN <i
+            class="fas fa-sign-in-alt"></i></button>
+
         <div>
           <svg fill="#000000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="20px" height="20px">
             <path fill="none" stroke="#000000" stroke-miterlimit="10" stroke-width="2"
@@ -41,31 +53,46 @@
     </nav>
   </header>
   <main>
+    <h2>
+      Aprenda conosco e quebre tabus
+    </h2>
+    <div class="banner">
+
+      <div class="action">
+        <img src="./src/images/tv.svg" alt="TV">
+
+        <button>Vamos começar
+          <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+
+      <img src="./src/images/undraw_education_f8ru.svg" alt="Aprendendo" title="Aprendendo">
+    </div>
     <h2>Diversão na certa</h2>
     <div class="container">
       <div class="values">
         <div class="card">
           <div class="content">
-
+            <img src="./src/images/game_quebra-cabeca.jpg" alt="Jogo de quebra-cabeça" title="Quebra-cabeça">
           </div>
           <div class="footer">
-
+            Quebra-cabeças
           </div>
         </div>
         <div class="card">
           <div class="content">
-
+            <img src="./src/images/undraw_mathematics_-4-otb.svg" alt="Jogo de matemática" title="Jogos de matemática">
           </div>
           <div class="footer">
-
+            Matemática
           </div>
         </div>
         <div class="card">
           <div class="content">
-
+            <img src="./src//images//undraw_traveling_re_weve.svg" alt="Geografia" title="Geografia">
           </div>
           <div class="footer">
-
+            Geografia
           </div>
         </div>
         <div class="card">
@@ -90,32 +117,35 @@
       </div>
 
     </div>
+    <h2>Participe conosco</h2>
     <div class="container">
+
       <img src="./src/images/undraw_real_time_collaboration_c62i.svg" width="500px" alt="Chat entre amigos"
-        title="Bate-papo">
+        title="Bate-papo" class="chat">
       <div class="values">
         <div class="card">
           <div class="content">
-
+            <img src="./src/images/undraw_ask_me_anything_k-8-o0.svg" alt="Perguntas" title="Fale com especialistas">
           </div>
           <div class="footer">
-
+            Especialistas
           </div>
         </div>
         <div class="card">
           <div class="content">
-
+            <img src="./src/images/undraw_public_discussion_re_w9up.svg" alt="Comunidades"
+              title="Converse com outras pessoas">
           </div>
           <div class="footer">
-
+            Comunidade
           </div>
         </div>
         <div class="card">
           <div class="content">
-
+            <img src="./src/images/undraw_metrics_re_6g90.svg" alt="Análises de progesso" title="Análise de progresso">
           </div>
           <div class="footer">
-
+            Análises
           </div>
         </div>
         <div class="card">

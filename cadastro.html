@@ -32,12 +32,13 @@
       |
       <a href="./sobre.html">SOBRE</a>
       <div class="actions">
-        <button type="button" onclick="window.location.href='./cadastro.html'">SIGNIN
+        <button type="button">SIGNIN
           <!-- <i class="fas fa-user-plus"></i> -->
         </button>
 
 
-        <button type="button">LOGIN <i class="fas fa-sign-in-alt"></i></button>
+        <button type="button" onclick="window.location.href='./login.html'">LOGIN <i
+            class="fas fa-sign-in-alt"></i></button>
 
         <div>
           <svg fill="#000000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="20px" height="20px">
@@ -52,15 +53,20 @@
     </nav>
   </header>
   <main>
-    <h2>Bem-vindo(a) de volta</h2>
-    <small>Faça o login para carregar o seu progresso</small>
+    <h2>Venha fazer parte dessa história</h2>
     <div>
-      <img src="./src/images/undraw_welcome_cats_thqn.svg" width="500px" alt="Selecionando jogador" title="Jogos">
+      <img src="./src/images/undraw_login_re_4vu2.svg" width="500px" alt="Selecionando jogador" title="Jogos">
       <form>
         <label for="txtNome">Nome</label>
         <div class="input">
           <input id="txtNome" type="text">
           <i class="fas fa-user"></i>
+        </div>
+
+        <label for="txtEmail">Email</label>
+        <div class="input">
+          <input id="txtEmail" type="text">
+          <i class="fas fa-envelope"></i>
         </div>
 
         <label for="txtSenha">Senha</label>
@@ -69,8 +75,10 @@
           <i class="fas fa-lock"></i>
         </div>
 
-        <button>Entrar<i class="fas fa-sign-in-alt"></i></button>
-        <a href="./esqueci.html"><small>Esqueci minha senha</small></a>
+        <button>Cadastrar
+          <!-- <i class="fas fa-users"></i> -->
+          <i class="fas fa-user-plus"></i>
+        </button>
       </form>
     </div>
   </main>
