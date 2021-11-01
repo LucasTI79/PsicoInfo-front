@@ -13,7 +13,8 @@
   <!-- Fontes -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
     integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
-
+  <!-- Scripts -->
+  <script src="./src//services/auth.js"></script>
 
 </head>
 
@@ -57,10 +58,10 @@
     <div>
       <img src="./src/images/undraw_welcome_cats_thqn.svg" width="500px" alt="Selecionando jogador" title="Jogos">
       <form>
-        <label for="txtNome">Nome</label>
+        <label for="txtEmail">Email</label>
         <div class="input">
-          <input id="txtNome" type="text">
-          <i class="fas fa-user"></i>
+          <input id="txtEmail" type="text">
+          <i class="fas fa-envelope"></i>
         </div>
 
         <label for="txtSenha">Senha</label>
@@ -69,7 +70,8 @@
           <i class="fas fa-lock"></i>
         </div>
 
-        <button>Entrar<i class="fas fa-sign-in-alt"></i></button>
+        <button type="button" onclick="auth(txtEmail.value, txtSenha.value)">
+          Entrar<i class="fas fa-sign-in-alt"></i></button>
         <a href="./esqueci.html"><small>Esqueci minha senha</small></a>
       </form>
     </div>
