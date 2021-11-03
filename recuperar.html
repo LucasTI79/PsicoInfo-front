@@ -33,7 +33,7 @@
       |
       <a href="./sobre.html">SOBRE</a>
       <div class="actions">
-        <button type="button">SIGNIN
+        <button type="button" onclick="window.location.href='./cadastro.html'">SIGNIN
           <!-- <i class="fas fa-user-plus"></i> -->
         </button>
 
@@ -54,32 +54,24 @@
     </nav>
   </header>
   <main>
-    <h2>Venha fazer parte dessa história</h2>
+    <h2>Oba! De volta a festa! Digite o token enviado para trocar a senha</h2>
     <div>
-      <img src="./src/images/undraw_login_re_4vu2.svg" width="500px" alt="Selecionando jogador" title="Jogos">
+      <img src="./src/images/undraw_partying_re_at7f.svg" height="400px" width="400px" alt="Selecionando jogador"
+        title="Esqueci minha senha">
       <form>
-        <label for="txtNome">Nome</label>
+        <label for="txtToken">Token</label>
         <div class="input">
-          <input id="txtNome" type="text">
-          <i class="fas fa-user"></i>
-        </div>
-
-        <label for="txtEmail">Email</label>
-        <div class="input">
-          <input id="txtEmail" type="text">
+          <input id="txtToken" type="text">
           <i class="fas fa-envelope"></i>
         </div>
-
-        <label for="txtSenha">Senha</label>
+        <label for="txtSenha">Nova Senha</label>
         <div class="input">
           <input id="txtSenha" type="password">
           <i class="fas fa-lock"></i>
         </div>
-
-        <button type="button" onclick="registerUser(txtNome.value, txtEmail.value, txtSenha.value)">Cadastrar
-          <!-- <i class="fas fa-users"></i> -->
-          <i class="fas fa-user-plus"></i>
-        </button>
+        <button type="button" onclick="resetPass(txtToken.value,txtSenha.value)">
+          Recuperar</button>
+        <!-- <button type="button" onclick="reset(txtToken.value,txtSenha.value)">Recuperar</button> -->
       </form>
     </div>
   </main>

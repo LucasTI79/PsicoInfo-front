@@ -14,10 +14,9 @@ main div form {
 }
 
 main div form div {
-  margin-bottom: 10px;
+  margin: 10px 0 20px 0;
   border: solid 1px #212121;
   border-radius: 10px;
-
 }
 
 main div form label {
@@ -51,21 +50,25 @@ main div form div i {
 }
 
 main div form button {
+  font-family: var(--font-title);
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   width: 250px;
   height: 40px;
+  color: #fff;
+  text-transform: uppercase;
   background-color: var(--secondary-color);
   border-radius: 10px;
-  margin: 10px 0 5px 0;
+  margin: 5px 0 5px 0;
   font-size: 16px;
   transition: .5s all ease-in-out;
 }
 
 main div form button:hover {
-  box-shadow: 1px 1px 2px #212121;
+  box-shadow: 1px 1px 5px #212121;
+  font-weight: bold;
 }
 
 main div form button i {
