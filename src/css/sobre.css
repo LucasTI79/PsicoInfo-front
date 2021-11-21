@@ -1,8 +1,85 @@
-body {
-  overflow-y: hidden;
+main img {
+  height: 45vh;
 }
 
-main img {
-  margin-top: 30px;
-  height: 45vh;
+main section {
+  width: 80vw;
+  margin: 40px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+main section article {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+main section article p {
+  margin-top: -10px;
+  font-size: 18px;
+  width: 50%;
+  line-height: 32px;
+}
+
+#containerCards {
+  display: flex;
+  flex-direction: column;
+  background-color: #f1f1f1;
+  width: 120%;
+  padding: 20px;
+  margin: 30px 0;
+}
+
+#containerCards h1 {
+  display: flex;
+  align-self: center;
+  margin: 10px 0 20px 0;
+}
+
+#containerCards .container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#containerCards .container div {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 300px;
+  height: 300px;
+  background-color: #fff;
+  box-shadow: .1px .1px 3px #212121;
+  transition: all .2s ease-in-out;
+  border-radius: 10px;
+}
+
+#containerCards .container div:hover {
+  box-shadow: .2px .2px 5px #212121;
+}
+
+#containerCards .container div img {
+  height: 80%;
+  max-width: 90%;
+  margin: 0 auto;
+  border-radius: 10px 10px 0 0;
+}
+
+#containerCards .container div div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 20%;
+  border-radius: 0 0 10px 10px;
+}
+
+#containerCards .container div div p {
+  text-transform: uppercase;
+  font-size: 14px;
 }

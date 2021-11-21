@@ -46,16 +46,16 @@ const registerUser = (username, email, password) => {
     alert('Formato de email inválido')
     return
   }
+  const data = new FormData();
+
+  data.append('username', username);
+  data.append('email',email);
+  data.append('password', password);
+  data.append('files',iptFile.files[0]);
+
   fetch('http://localhost:3333/users',{
     method:'POST',
-    body: JSON.stringify({
-      username,
-      email,
-      password
-    }),
-    headers: {
-      'Content-Type':'application/json'
-    }
+    body: data,
   })
   .then(async res => {
       if(res.status !== 201){
@@ -63,14 +63,15 @@ const registerUser = (username, email, password) => {
         alert(error.error)
         throw new Error(error)
       }else{
-        res.json()
+        alert(`usuário ${username} criado com sucesso`)
+        window.location.href = "./login.html"
+        // res.json()
       }
     } 
   )
-  .then(data => {
-    alert(`usuário ${username} criado com sucesso`)
-    window.location.href = "./login.html"
-  })
+  // .then(data => {
+    
+  // })
   .catch()
 }
 
@@ -84,6 +85,7 @@ const forgotPass = (email) => {
     alert('Formato de email inválido')
     return
   }
+
   fetch('http://localhost:3333/users/forgot',{
     method:'POST',
     body: JSON.stringify({
@@ -121,7 +123,7 @@ const resetPass = (token, password) => {
   fetch('http://localhost:3333/users/reset',{
     method:'POST',
     body: JSON.stringify({
-      token,
+      token: token.trim(),
       password
     }),
     headers: {

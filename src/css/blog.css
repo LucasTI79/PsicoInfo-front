@@ -1,8 +1,58 @@
-body {
+/* body {
   overflow-y: hidden;
-}
+} */
 
-main img {
+/* main img {
   margin-top: 30px;
   height: 45vh;
+} */
+
+main section {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: flex-start;
+  align-items: flex-start; */
+  width: 80vw;
+  padding: 20px 50px;
+}
+
+main section article {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  height: 200px;
+  /* border: 1px solid #000; */
+  margin-bottom: 20px;
+  box-shadow: .5px .5px 2px #212121;
+}
+
+main section article div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 30%;
+  border-right: 3px solid #ddd;
+  height: 100%;
+  /* border: 2px solid green; */
+  cursor: pointer;
+
+}
+
+main section article div img {
+  height: 90%;
+  width: 90%;
+}
+
+main section article p {
+  /* border: 2px solid blue; */
+  padding: 2% 5%;
+  height: 80%;
+  width: 80%;
+}
+
+main section article b {
+  cursor: pointer
 }

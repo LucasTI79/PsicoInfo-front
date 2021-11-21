@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PsicoInfo</title>
+  <link rel="shortcut icon" href="./src/images/logo.jpg" type="image/x-icon">
   <!-- Estilos -->
   <link rel="stylesheet" href="./src/css/global.css">
   <link rel="stylesheet" href="./src/css/componentes.css">
@@ -56,8 +57,16 @@
   <main>
     <h2>Venha fazer parte dessa história</h2>
     <div>
-      <img src="./src/images/undraw_login_re_4vu2.svg" width="500px" alt="Selecionando jogador" title="Jogos">
-      <form>
+      <img src="./src/images/undraw_login_re_4vu2.svg" width="600px" alt="Selecionando jogador" title="Jogos">
+      <form enctype="multipart/form-data">
+        <label for="iptFile" style="align-self: center;">Imagem de perfil</label>
+        <div id="input_image">
+          <input id="iptFile" type="file" />
+          <label id="lblFile" for="iptFile">escolher arquivo</label>
+          <div id="preview"></div>
+        </div>
+
+
         <label for="txtNome">Nome</label>
         <div class="input">
           <input id="txtNome" type="text">
@@ -92,3 +101,61 @@
 </body>
 
 </html>
+<script>
+  const fileTypes = [
+    "image/jpg",
+    "image/jpeg",
+    "image/pjpeg",
+  ];
+
+  function validFileType(file) {
+    return fileTypes.includes(file.type);
+  }
+
+  function returnFileSize(number) {
+    if (number < 1024) {
+      return number + 'bytes';
+    } else if (number >= 1024 && number < 1048576) {
+      return (number / 1024).toFixed(1) + 'KB';
+    } else if (number >= 1048576) {
+      return (number / 1048576).toFixed(1) + 'MB';
+    }
+  }
+
+  function updateImageDisplay() {
+    while (preview.firstChild) {
+      preview.removeChild(preview.firstChild);
+    }
+
+    const curFiles = iptFile.files;
+    if (curFiles.length === 0) {
+      const para = document.createElement('p');
+      // para.textContent = 'No files currently selected for upload';
+      preview.appendChild(para);
+    } else {
+      const list = document.createElement('ol');
+      preview.appendChild(list);
+
+      for (const file of curFiles) {
+        const listItem = document.createElement('li');
+        const para = document.createElement('p');
+        if (validFileType(file)) {
+          // para.textContent = `File name ${file.name}, file size ${returnFileSize(file.size)}.`;
+          const image = document.createElement('img');
+          image.src = URL.createObjectURL(file);
+
+          listItem.appendChild(image);
+          listItem.appendChild(para);
+        } else {
+          // para.textContent = `File name ${file.name}: Not a valid file type. Update your selection.`;
+          listItem.appendChild(para);
+        }
+
+        list.appendChild(listItem);
+        preview.style.display = 'flex'
+        lblFile.style.display = 'none'
+      }
+    }
+  }
+  document.getElementById('iptFile').addEventListener('change', () => updateImageDisplay())
+</script>
