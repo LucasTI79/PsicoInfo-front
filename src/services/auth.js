@@ -31,6 +31,8 @@ const authUser = (email, password) => {
   .then(data => {
     console.log('data',data.user)
     alert(`Bem-vindo(a) ${data.user[0].username}`)
+    sessionStorage.USERNAME = data.user[0].username;
+    sessionStorage.EMAIL = data.user[0].email;
     window.location.href = './'
   })
   .catch()
@@ -120,12 +122,13 @@ const resetPass = (token, password) => {
     alert('Informe o token e a senha')
     return
   }
-  fetch('http://localhost:3333/users/reset',{
+  fetch(`http://localhost:3333/users/reset`,{
     method:'POST',
     body: JSON.stringify({
       token: token.trim(),
       password
     }),
+    
     headers: {
       'Content-Type':'application/json'
     }

@@ -20,42 +20,82 @@
   <script type="text/javascript">
     const socket = io("http://localhost:3333");
 
+    socket.on('nickname', () => {
+      let name;
+
+      while (!name) {
+        if (!sessionStorage.USERNAME) {
+          name = true
+        }
+        name = prompt('Qual é seu nome?');
+        sessionStorage.USERNAME = name;
+      }
+
+      socket.emit('nickname', name)
+
+      historico_mensagens.innerHTML = `
+        <p class="system">
+          <span>Seja bem-vindo(a) ${name}!</span>
+        </p>
+        `
+    })
+
+    socket.on('system', message => {
+      historico_mensagens.innerHTML += `
+        <p class="system">
+          <span>${message.type == 'connect' ? `${message.username} entrou` : `${message.username} saiu`}</span>
+        </p>
+        
+      `
+    })
+
+    socket.on("atualizar mensagens antigas", function (mensagens) {
+      mensagens && mensagens.forEach(mensagem => historico_mensagens.innerHTML +=
+        `<p class='${mensagem.type}'>
+          <span class="username">${mensagem.username}</span>
+          <span class="message">${mensagem.msg} </span>
+          <span class="hour"> [${mensagem.datetime.slice(11,16)}] </span>
+        </p>
+        `)
+    });
+
     function enviarmensagem() {
-      socket.emit("enviar mensagem", texto_mensagem.value, function () {
+      socket.emit("enviar mensagem", {
+        type: 'message',
+        msg: texto_mensagem.value,
+        username: sessionStorage.getItem('USERNAME') ?
+          sessionStorage.getItem('USERNAME').split(' ')[0] : 'anonimous'
+      }, function () {
         texto_mensagem.value = '';
       });
     }
 
     socket.on("atualizar mensagens", function (mensagem) {
-      let mensagem_formatada = `<p>${mensagem}</p>`;
-      historico_mensagens.innerHTML += mensagem_formatada;
+      historico_mensagens.innerHTML += `
+      <p class='${mensagem.type}'>
+          <span class="username">${mensagem.username}</span>
+          <span class="message">${mensagem.msg} </span>
+          <span class="hour"> [${mensagem.datetime.slice(11,16)}] </span>
+      </p>
+      `
     });
   </script>
   <style>
-    html,
-    body {
-      font-family: Arial, Tahoma, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background: #302F31;
-      padding: 10px;
-    }
-
     form {
       margin: 15px 0;
+      width: 80%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     form input[type='text'] {
       border: 2px solid #45C5BF;
       border-radius: 5px;
       padding: 5px;
-      width: 75%;
     }
 
-    form input[type='button'] {
+    form button[type='button'] {
       background: #45C5BF;
       border: none;
       border-radius: 5px;
@@ -63,13 +103,68 @@
       cursor: pointer;
       font-weight: bold;
       padding: 7px 5px;
-      width: 19%;
+      width: max-content;
     }
 
     #historico_mensagens {
-      background: #FFF;
+      background: #E3DBD3;
       border: 2px solid #45C5BF;
       height: 550px;
+      width: 50%;
+      padding: 20px 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    #historico_mensagens p.message {
+      padding: 5px 10px 10px 10px;
+      background-color: #fff;
+      margin: 5px;
+      display: flex;
+      flex-direction: column;
+      width: max-content;
+      justify-content: flex-start;
+      align-items: flex-start;
+      position: relative;
+      border-radius: 5px;
+      margin: 3px 0;
+    }
+
+    #historico_mensagens p.message:before {
+      content: "";
+      position: absolute;
+      /* right: ; */
+      top: 100%;
+      width: 0;
+      height: 0;
+      border-top: 8px solid #fff;
+      border-right: 8px solid transparent;
+    }
+
+    #historico_mensagens p.message span.username {
+      color: blue;
+    }
+
+    #historico_mensagens p.message span.message {
+      font-size: 14px;
+      width: max-content;
+    }
+
+    #historico_mensagens p.message span.hour {
+      align-self: flex-end;
+      font-size: 12px;
+    }
+
+    #historico_mensagens p.system {
+      align-self: center;
+      left: 2%;
+      bottom: 2%;
+      font-size: 12px;
+      background-color: #E1F2FB;
+      padding: 5px;
+      border-radius: 5px;
+      width: max-content;
     }
   </style>
 </head>
@@ -112,8 +207,8 @@
   <main>
     <div id="historico_mensagens"></div>
     <form>
-      <input type='text' id='texto_mensagem' name='texto_mensagem' />
-      <input type='button' value='Enviar mensagem!' onclick="enviarmensagem()" />
+      <input type='text' id='texto_mensagem' name='texto_mensagem' autocomplete="off" />
+      <button type='button' onclick="enviarmensagem()">Enviar mensagem</button>
     </form>
   </main>
   <footer>
@@ -126,3 +221,14 @@
 </body>
 
 </html>
+<script>
+  document.getElementById('texto_mensagem').addEventListener('keydown', function (e) {
+    if (e.keyIdentifier == 'U+000A' || e.keyIdentifier == 'Enter' || e.keyCode == 13) {
+      if (e.target.nodeName == 'INPUT' && e.target.type == 'text') {
+        e.preventDefault();
+        enviarmensagem();
+        return false;
+      }
+    }
+  }, true);
+</script>
