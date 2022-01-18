@@ -10,28 +10,32 @@
   <!-- Estilos -->
   <link rel="stylesheet" href="./src/css/global.css">
   <link rel="stylesheet" href="./src/css/componentes.css">
+  <link rel="stylesheet" href="./src/css/chat.css">
+
   <!-- Fontes -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
     integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
   <!-- Scripts -->
+  <script src="./src/Utils/index.js"></script>
+  <script src="./configs/index.js"></script>
   <script src="https://cdn.socket.io/4.4.0/socket.io.min.js"
     integrity="sha384-1fOn6VtTq3PWwfsOrk45LnYcGosJwzMHv+Xh/Jx5303FVOXzEnw0EpLv30mtjmlj" crossorigin="anonymous">
   </script>
   <script type="text/javascript">
-    const socket = io("http://localhost:3333");
+    const socket = io(BASE_URL);
 
     socket.on('nickname', () => {
-      let name;
-
-      while (!name) {
-        if (!sessionStorage.USERNAME) {
-          name = true
-        }
-        name = prompt('Qual é seu nome?');
-        sessionStorage.USERNAME = name;
+      if (!localStorage.USERNAME || !localStorage.IMAGE_URL || !localStorage.USER_ID) {
+        return window.location = './login.html'
       }
 
-      socket.emit('nickname', name)
+      const name = localStorage.USERNAME.split(' ')[0];
+
+      socket.emit('nickname', {
+        username: name,
+        email: localStorage.EMAIL,
+        filename: localStorage.IMAGE_URL
+      })
 
       historico_mensagens.innerHTML = `
         <p class="system">
@@ -50,27 +54,56 @@
     })
 
     socket.on("atualizar mensagens antigas", function (mensagens) {
-      mensagens && mensagens.forEach(mensagem => historico_mensagens.innerHTML +=
-        `<p class='${mensagem.type}'>
-          <span class="username">${mensagem.username}</span>
-          <span class="message">${mensagem.msg} </span>
-          <span class="hour"> [${mensagem.datetime.slice(11,16)}] </span>
-        </p>
-        `)
+      mensagens && mensagens.forEach(mensagem => {
+        if (mensagem.email === localStorage.EMAIL) {
+          historico_mensagens.innerHTML +=
+            `<p class='${mensagem.type} myMessage'>
+            <span class="message">${mensagem.msg} </span>
+            <span class="hour"> ${mensagem.datetime.slice(11,16)}</span>
+          </p>
+          `
+        } else {
+          historico_mensagens.innerHTML +=
+            `<p class='${mensagem.type}'>
+            <span class="username">${mensagem.username}</span>
+            <span class="message">${mensagem.msg} </span>
+            <span class="hour"> ${mensagem.datetime.slice(11,16)}</span>
+          </p>
+        `
+        }
+      })
     });
 
     function enviarmensagem() {
-      socket.emit("enviar mensagem", {
+      this.bodyMessage = {
+        email: localStorage.getItem('EMAIL'),
         type: 'message',
         msg: texto_mensagem.value,
-        username: sessionStorage.getItem('USERNAME') ?
-          sessionStorage.getItem('USERNAME').split(' ')[0] : 'anonimous'
-      }, function () {
+        username: localStorage.getItem('USERNAME') ?
+          localStorage.getItem('USERNAME').split(' ')[0] : 'anonimous',
+        filename: localStorage.getItem('IMAGE_URL')
+      }
+
+      socket.emit("enviar mensagem", this.bodyMessage, function () {
         texto_mensagem.value = '';
       });
+
+      historico_mensagens.innerHTML += `
+      <p class='${this.bodyMessage.type} myMessage'>
+          <span class="message">${this.bodyMessage.msg} </span>
+          <span class="hour"> ${dateNow().slice(11,16)} </span>
+      </p>
+      `
     }
 
     socket.on("atualizar mensagens", function (mensagem) {
+      console.log('user data', mensagem)
+      console.log({
+        icon: `${BASE_URL}/uploads/${mensagem.filename}`
+      })
+      new Notification(`${mensagem.username} te enviou uma mensagem!`, {
+        icon: `${BASE_URL}/uploads/${mensagem.filename}`
+      })
       historico_mensagens.innerHTML += `
       <p class='${mensagem.type}'>
           <span class="username">${mensagem.username}</span>
@@ -80,93 +113,6 @@
       `
     });
   </script>
-  <style>
-    form {
-      margin: 15px 0;
-      width: 80%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    form input[type='text'] {
-      border: 2px solid #45C5BF;
-      border-radius: 5px;
-      padding: 5px;
-    }
-
-    form button[type='button'] {
-      background: #45C5BF;
-      border: none;
-      border-radius: 5px;
-      color: #FFF;
-      cursor: pointer;
-      font-weight: bold;
-      padding: 7px 5px;
-      width: max-content;
-    }
-
-    #historico_mensagens {
-      background: #E3DBD3;
-      border: 2px solid #45C5BF;
-      height: 550px;
-      width: 50%;
-      padding: 20px 15px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-    }
-
-    #historico_mensagens p.message {
-      padding: 5px 10px 10px 10px;
-      background-color: #fff;
-      margin: 5px;
-      display: flex;
-      flex-direction: column;
-      width: max-content;
-      justify-content: flex-start;
-      align-items: flex-start;
-      position: relative;
-      border-radius: 5px;
-      margin: 3px 0;
-    }
-
-    #historico_mensagens p.message:before {
-      content: "";
-      position: absolute;
-      /* right: ; */
-      top: 100%;
-      width: 0;
-      height: 0;
-      border-top: 8px solid #fff;
-      border-right: 8px solid transparent;
-    }
-
-    #historico_mensagens p.message span.username {
-      color: blue;
-    }
-
-    #historico_mensagens p.message span.message {
-      font-size: 14px;
-      width: max-content;
-    }
-
-    #historico_mensagens p.message span.hour {
-      align-self: flex-end;
-      font-size: 12px;
-    }
-
-    #historico_mensagens p.system {
-      align-self: center;
-      left: 2%;
-      bottom: 2%;
-      font-size: 12px;
-      background-color: #E1F2FB;
-      padding: 5px;
-      border-radius: 5px;
-      width: max-content;
-    }
-  </style>
 </head>
 
 <body>
@@ -183,24 +129,8 @@
       <a href="./blog.html">Blog</a>
       |
       <a href="./sobre.html">SOBRE</a>
-      <div class="actions">
-        <button type="button" onclick="window.location.href='./cadastro.html'">SIGNIN
-          <!-- <i class="fas fa-user-plus"></i> -->
-        </button>
 
-
-        <button type="button" onclick="window.location.href='./login.html'">LOGIN <i
-            class="fas fa-sign-in-alt"></i></button>
-
-        <div>
-          <svg fill="#000000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="20px" height="20px">
-            <path fill="none" stroke="#000000" stroke-miterlimit="10" stroke-width="2"
-              d="M13 4A9 9 0 1 0 13 22A9 9 0 1 0 13 4Z" />
-            <path fill="none" stroke="#000000" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"
-              d="M26 26L19.437 19.437" /></svg>
-        </div>
-
-      </div>
+      <a href="./profile.html">Perfil</a>
 
     </nav>
   </header>
@@ -231,4 +161,32 @@
       }
     }
   }, true);
+
+  (async () => {
+
+    // Verifica se o browser suporta notificações
+    if (!("Notification" in window)) {
+      console.log("Este browser não suporta notificações de Desktop");
+    }
+
+    // Let's check whether notification permissions have already been granted
+    else if (Notification.permission === "granted") {
+      // If it's okay let's create a notification
+      console.log('Notificações ativadas!')
+    }
+
+    // Otherwise, we need to ask the user for permission
+    else if (Notification.permission !== 'denied') {
+      Notification.requestPermission(function (permission) {
+        // If the user accepts, let's create a notification
+        if (permission === "granted") {
+          alert('Notificações ativadas!')
+        }
+      });
+    }
+
+    // At last, if the user has denied notifications, and you
+    // want to be respectful there is no need to bother them any more.
+
+  })();
 </script>

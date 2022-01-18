@@ -51,6 +51,7 @@ main section article p {
   padding: 2% 5%;
   height: 80%;
   width: 80%;
+  line-height: 2;
 }
 
 main section article b {

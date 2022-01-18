@@ -1,0 +1,112 @@
+form {
+  margin: 15px 0;
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+form input[type='text'] {
+  border: 2px solid #45C5BF;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+form button[type='button'] {
+  background: #45C5BF;
+  border: none;
+  border-radius: 5px;
+  color: #FFF;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 7px 5px;
+  width: max-content;
+}
+
+#historico_mensagens {
+  background: #E3DBD3;
+  border: 2px solid #45C5BF;
+  height: 550px;
+  overflow-y: auto;
+  width: 50%;
+  padding: 20px 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  scrollbar-width: thin;
+  scrollbar-color: #45C5BF transparent;
+}
+
+#historico_mensagens::-webkit-scrollbar {
+  width: 5px;
+}
+
+#historico_mensagens::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#historico_mensagens::-webkit-scrollbar-thumb {
+  background-color: #45C5BF;
+  border-radius: 20px;
+  border: 3px solid transparent;
+}
+
+#historico_mensagens p.myMessage {
+  background-color: #F2C335 !important;
+  align-self: flex-end;
+}
+
+#historico_mensagens p.myMessage:before {
+  border: none !important;
+}
+
+#historico_mensagens p.message {
+  padding: 5px 10px 10px 10px;
+  background-color: #fff;
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+  justify-content: flex-start;
+  align-items: flex-start;
+  position: relative;
+  border-radius: 5px;
+  margin: 3px 0;
+}
+
+#historico_mensagens p.message:before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  width: 0;
+  height: 0;
+  border-top: 8px solid #fff;
+  border-right: 8px solid transparent;
+}
+
+#historico_mensagens p.message span.username {
+  color: blue;
+  font-size: 12px;
+  text-transform: capitalize;
+}
+
+#historico_mensagens p.message span.message {
+  font-size: 14px;
+  width: max-content;
+}
+
+#historico_mensagens p.message span.hour {
+  align-self: flex-end;
+  font-size: 12px;
+}
+
+#historico_mensagens p.system {
+  align-self: center;
+  left: 2%;
+  bottom: 2%;
+  font-size: 12px;
+  background-color: #E1F2FB;
+  padding: 5px;
+  border-radius: 5px;
+  width: max-content;
+}

@@ -8,7 +8,10 @@ const authUser = (email, password) => {
     alert('Formato de email inválido')
     return
   }
-  fetch('http://localhost:3333/users/auth',{
+
+  console.log(BASE_URL+'/users/auth')
+
+  fetch(BASE_URL+'/users/auth',{
     method:'POST',
     body: JSON.stringify({
       email,
@@ -31,9 +34,11 @@ const authUser = (email, password) => {
   .then(data => {
     console.log('data',data.user)
     alert(`Bem-vindo(a) ${data.user[0].username}`)
-    sessionStorage.USERNAME = data.user[0].username;
-    sessionStorage.EMAIL = data.user[0].email;
-    window.location.href = './'
+    localStorage.USERNAME = data.user[0].username;
+    localStorage.EMAIL = data.user[0].email;
+    localStorage.IMAGE_URL = data.user[0].filename;
+    localStorage.USER_ID = data.user[0].id;
+    window.location.href = './profile.html'
   })
   .catch()
 }
@@ -55,7 +60,7 @@ const registerUser = (username, email, password) => {
   data.append('password', password);
   data.append('files',iptFile.files[0]);
 
-  fetch('http://localhost:3333/users',{
+  fetch(BASE_URL+'/users',{
     method:'POST',
     body: data,
   })
@@ -88,7 +93,7 @@ const forgotPass = (email) => {
     return
   }
 
-  fetch('http://localhost:3333/users/forgot',{
+  fetch(BASE_URL+'/users/forgot',{
     method:'POST',
     body: JSON.stringify({
       email
@@ -117,12 +122,12 @@ const forgotPass = (email) => {
 }
 
 const resetPass = (token, password) => {
-  console.log("amigo estou aqui");
   if(!token || !password){
     alert('Informe o token e a senha')
     return
   }
-  fetch(`http://localhost:3333/users/reset`,{
+  console.log(BASE_URL+'/users/reset')
+  fetch(BASE_URL+'/users/reset',{
     method:'POST',
     body: JSON.stringify({
       token: token.trim(),
@@ -150,3 +155,23 @@ const resetPass = (token, password) => {
   })
   .catch();
 }
+
+const signout = () => {
+  window.location.href = './index.html';
+  localStorage.clear();
+}
+
+window.onload = () => {
+    let includes = true;
+    !Object.keys(localStorage).length 
+    ? includes = !includes
+    : Object.keys(localStorage).forEach(key => {
+      if(!['USERNAME','EMAIL','IMAGE_URL','USER_ID'].includes(key)){
+        includes = false
+      };
+    })
+
+    if(includes){
+      window.location = './profile.html'
+    }
+  }
