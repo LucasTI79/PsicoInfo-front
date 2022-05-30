@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PsicoInfo</title>
+  <link rel="shortcut icon" href="./src/images/logo.jpg" type="image/x-icon">
   <!-- Estilos -->
   <link rel="stylesheet" href="./src/css/global.css">
   <link rel="stylesheet" href="./src/css/componentes.css">
@@ -13,8 +14,9 @@
   <!-- Fontes -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
     integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
-
-
+  <!-- Scripts -->
+  <script src="./configs/index.js"></script>
+  <script src="./src/js/scripts.js"></script>
 </head>
 
 <body>
@@ -53,8 +55,57 @@
     </nav>
   </header>
   <main>
-    <h2>Em contrução</h2>
-    <img src="./src/images/undraw_building_websites_i78t.svg" alt="Em contrução" alt="Contruindo">
+    <h2>BLOG</h2>
+    <section>
+      <article>
+        <div onclick="window.location.href='./articles/autism/index.html'">
+          <img src="./src/cover/autism.jpg" alt="Autismo" title="Autismo">
+        </div>
+        <p>O autismo, cientificamente conhecido como Transtorno do Espectro Autista, é um transtorno no desenvolvimento
+          neurológico da criança que gera alterações na comunicação, dificuldade ou ausência de interação social e
+          mudanças no comportamento, sendo geralmente identificado entre os 12 e 24 meses de idade [...] <b
+            onclick="window.location.href='./articles/autism/index.html'">Saiba mais</b>
+        </p>
+      </article>
+      <article>
+        <div onclick="window.location.href='./articles/depressao/index.html'">
+          <img src="./src/cover/depressao.jpeg" alt="Depressão" title="Depressão">
+        </div>
+        <p>A depressão é um distúrbio afetivo que acompanha a humanidade ao longo de sua história. No sentido
+          patológico, há presença de tristeza, pessimismo, baixa auto-estima, que aparecem com freqüência e podem
+          combinar-se entre si. [...] <b onclick="window.location.href='./articles/depressao/index.html'">Saiba mais</b>
+        </p>
+      </article>
+
+
+      <article>
+
+        <div onclick="window.location.href='./articles/anorexia/index.html'">
+          <img src="./src/cover/anorexia.jpg" alt="Anorexia" title="Anorexia">
+        </div>
+
+        <p>A anorexia nervosa é um transtorno alimentar que faz a pessoa enxergar o próprio corpo de maneira distorcida
+          (em geral, muito acima do peso) e, a partir daí, leva a atitudes de risco como dietas restritivas, abuso de
+          exercícios físicos, indução de vômito para expulsar as refeições e até mesmo uso de medicamentos como
+          laxantes[...] <b onclick="window.location.href='./articles/anorexia/index.html'">Saiba mais</b>
+        </p>
+
+      </article>
+
+
+      <article>
+        <div onclick="window.location.href='./articles/bulimia/index.html'">
+          <img src="./src/cover/bulimia.jpg" alt="Bulimia" title="Bulimia">
+        </div>
+        <p>Bulimia é um transtorno alimentar possivelmente fatal.
+          As pessoas com essa doença têm compulsão por comer. Elas tomam medidas para evitar o ganho de peso.
+          Normalmente, isso significa vômitos (expurgo). No entanto, também pode incluir excesso de exercícios físicos
+          ou jejum.
+          Os tratamentos incluem terapia, medicamentos e educação nutricional[...] <b
+            onclick="window.location.href='./articles/bulimia/index.html'">Saiba mais</b>
+        </p>
+      </article>
+    </section>
   </main>
   <footer>
     <div>

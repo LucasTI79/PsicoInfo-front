@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PsicoInfo</title>
+  <link rel="shortcut icon" href="./src/images/logo.jpg" type="image/x-icon">
   <!-- Estilos -->
   <link rel="stylesheet" href="./src/css/global.css">
   <link rel="stylesheet" href="./src/css/componentes.css">
@@ -13,7 +14,10 @@
   <!-- Fontes -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
     integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
-
+  <!-- Scripts -->
+  <script src="./configs/index.js"></script>
+  <script src="./src/services/auth.js"></script>
+  <script src="./src/js/scripts.js"></script>
 
 </head>
 
@@ -57,15 +61,21 @@
       Aprenda conosco e quebre tabus
     </h2>
     <div class="banner">
-
-      <div class="action">
+      <div id="tv">
+        <div class="content">
+          <h3>Vamos começar a aprender?</h3>
+          <button onclick="window.location = './blog.html'">Vamos lá
+            <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+      <!-- <div class="action">
         <img src="./src/images/tv.svg" alt="TV">
 
         <button>Vamos começar
           <i class="fas fa-arrow-right"></i>
         </button>
-      </div>
-
+      </div> -->
       <img src="./src/images/undraw_education_f8ru.svg" alt="Aprendendo" title="Aprendendo">
     </div>
     <h2>Diversão na certa</h2>

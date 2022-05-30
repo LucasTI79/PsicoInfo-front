@@ -1,0 +1,19 @@
+section {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 80%;
+  margin-top: 20px;
+}
+
+section article {
+  line-height: 2;
+  text-align: justify;
+}
+
+section article img {
+  float: left;
+  width: 30%;
+  margin-right: 20px;
+}

@@ -10,48 +10,13 @@
   <!-- Estilos -->
   <link rel="stylesheet" href="./src/css/global.css">
   <link rel="stylesheet" href="./src/css/componentes.css">
-  <link rel="stylesheet" href="./src/css/jogos.css">
+  <link rel="stylesheet" href="./src/css/form.css">
   <!-- Fontes -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
     integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
   <!-- Scripts -->
-  <script src="./src/js/drag.js"></script>
-  <style>
-    .example-parent {
-      border: 2px solid #DFA612;
-      color: black;
-      display: flex;
-      font-family: sans-serif;
-      font-weight: bold;
-    }
-
-    .example-origin {
-      flex-basis: 100%;
-      flex-grow: 1;
-      padding: 10px;
-      position: relative;
-    }
-
-    .example-draggable {
-      background-color: #4AAE9B;
-      font-weight: normal;
-      margin-bottom: 10px;
-      margin-top: 10px;
-      padding: 10px;
-      /* position: absolute; */
-    }
-
-    .example-dropzone {
-
-      background-color: #6DB65B;
-      /* flex-basis: 100%;
-      flex-grow: 1; */
-      padding: 10px;
-      position: relative;
-      width: max-content;
-      height: max-content;
-    }
-  </style>
+  <script src="./configs/index.js"></script>
+  <script src="./src/services/auth.js"></script>
 
 </head>
 
@@ -64,7 +29,7 @@
 
       <a href="./index.html">INICIO</a>
       |
-      <a href="#">JOGOS</a>
+      <a href="./jogos.html">JOGOS</a>
       |
       <a href="./blog.html">Blog</a>
       |
@@ -91,36 +56,26 @@
     </nav>
   </header>
   <main>
-    <!-- <h2>Em contrução</h2>
-    <img src="./src/images/undraw_building_websites_i78t.svg" alt="Em contrução" alt="Contruindo"> -->
-    <div class="container">
-      <div class="values">
-        <div class="card" onclick="window.location = './games/quebra-cabeca/index.html'">
-          <div class="content">
-            <img src="./src/images/game_quebra-cabeca.jpg" alt="Jogo de quebra-cabeça" title="Quebra-cabeça">
-          </div>
-          <div class="footer">
-            Quebra-cabeças
-          </div>
+    <h2>Oba! De volta a festa! Digite o token enviado para trocar a senha</h2>
+    <div>
+      <img src="./src/images/undraw_partying_re_at7f.svg" height="400px" width="400px" alt="Selecionando jogador"
+        title="Esqueci minha senha">
+      <form>
+        <label for="txtToken">Token</label>
+        <div class="input">
+          <input id="txtToken" type="text">
+          <i class="fas fa-envelope"></i>
         </div>
-        <div class="card" onclick="window.location = './games/sudoku/index.html'">
-          <div class="content">
-            <img src="./src/images/undraw_mathematics_-4-otb.svg" alt="Jogo de matemática" title="Jogos de matemática">
-          </div>
-          <div class="footer">
-            Matemática
-          </div>
+        <label for="txtSenha">Nova Senha</label>
+        <div class="input">
+          <input id="txtSenha" type="password">
+          <i class="fas fa-lock"></i>
         </div>
-        <div class="card" onclick="window.location = './games/caca-palavras/index.html'">
-          <div class="content">
-            <img src="./src/images/undraw_traveling_re_weve.svg" alt="Geografia" title="Geografia">
-          </div>
-          <div class="footer">
-            Geografia
-          </div>
-        </div>
-      </div>
-
+        <button type="button" onclick="resetPass(txtToken.value,txtSenha.value)">
+          Recuperar</button>
+        <!-- <button type="button" onclick="reset(txtToken.value,txtSenha.value)">Recuperar</button> -->
+      </form>
+    </div>
   </main>
   <footer>
     <div>

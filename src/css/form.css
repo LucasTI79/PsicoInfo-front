@@ -2,6 +2,7 @@ main div {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  align-items: center;
   width: 100%;
   margin-top: 20px;
 }
@@ -14,10 +15,9 @@ main div form {
 }
 
 main div form div {
-  margin-bottom: 10px;
+  margin: 10px 0 20px 0;
   border: solid 1px #212121;
   border-radius: 10px;
-
 }
 
 main div form label {
@@ -31,7 +31,7 @@ main div form input {
   border: none;
   border-right: solid 1px #212121;
   border-radius: 10px 0 0 10px;
-  height: 40px;
+  height: 35px;
   width: 200px;
   font-size: 16px;
   font-family: var(--font-text);
@@ -43,6 +43,10 @@ main div form input:focus {
   border: none;
 }
 
+main div form input[type="file"] {
+  display: none;
+}
+
 main div form div i {
   align-self: center;
   justify-self: center;
@@ -51,23 +55,77 @@ main div form div i {
 }
 
 main div form button {
+  font-family: var(--font-title);
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   width: 250px;
   height: 40px;
+  color: #fff;
+  text-transform: uppercase;
   background-color: var(--secondary-color);
   border-radius: 10px;
-  margin: 10px 0 5px 0;
+  margin: 5px 0 5px 0;
   font-size: 16px;
   transition: .5s all ease-in-out;
 }
 
 main div form button:hover {
-  box-shadow: 1px 1px 2px #212121;
+  box-shadow: 1px 1px 5px #212121;
+  font-weight: bold;
 }
 
 main div form button i {
   margin-left: 5px;
+}
+
+#input_image {
+  border: 1px solid #212121;
+  border-radius: 40%;
+  height: 120px;
+  width: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+}
+
+#input_image label {
+  font-size: 10px;
+  width: max-content;
+  height: max-content;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+#input_image label:hover {
+  background-color: #cdcdcd;
+}
+
+#preview {
+  /* align-items: center; */
+  position: absolute;
+  display: none;
+  height: 120px;
+  width: 120px;
+  border: none;
+  padding: 2px;
+  justify-content: center;
+  align-items: center;
+}
+
+#preview ol,
+ul,
+li,
+img {
+  height: 100%;
+  list-style: none;
+}
+
+#preview img {
+  height: 120px;
+  width: 120px;
+  border-radius: 40%;
+  object-fit: cover;
 }

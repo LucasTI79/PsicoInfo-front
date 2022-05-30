@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PsicoInfo</title>
+  <link rel="shortcut icon" href="./src/images/logo.jpg" type="image/x-icon">
+  <!-- Estilos -->
+  <link rel="stylesheet" href="./src/css/global.css">
+  <link rel="stylesheet" href="./src/css/componentes.css">
+  <link rel="stylesheet" href="./src/css/chat.css">
+
+  <!-- Fontes -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+    integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+  <!-- Scripts -->
+  <script src="./src/Utils/index.js"></script>
+  <script src="./configs/index.js"></script>
+  <script src="https://cdn.socket.io/4.4.0/socket.io.min.js"
+    integrity="sha384-1fOn6VtTq3PWwfsOrk45LnYcGosJwzMHv+Xh/Jx5303FVOXzEnw0EpLv30mtjmlj" crossorigin="anonymous">
+  </script>
+  <script type="text/javascript">
+    const socket = io(BASE_URL);
+
+    socket.on('nickname', () => {
+      if (!localStorage.USERNAME || !localStorage.IMAGE_URL || !localStorage.USER_ID) {
+        return window.location = './login.html'
+      }
+
+      const name = localStorage.USERNAME.split(' ')[0];
+
+      socket.emit('nickname', {
+        username: name,
+        email: localStorage.EMAIL,
+        filename: localStorage.IMAGE_URL
+      })
+
+      historico_mensagens.innerHTML = `
+        <p class="system">
+          <span>Seja bem-vindo(a) ${name}!</span>
+        </p>
+        `
+    })
+
+    socket.on('system', message => {
+      historico_mensagens.innerHTML += `
+        <p class="system">
+          <span>${message.type == 'connect' ? `${message.username} entrou` : `${message.username} saiu`}</span>
+        </p>
+        
+      `
+    })
+
+    socket.on("atualizar mensagens antigas", function (mensagens) {
+      mensagens && mensagens.forEach(mensagem => {
+        if (mensagem.email === localStorage.EMAIL) {
+          historico_mensagens.innerHTML +=
+            `<p class='${mensagem.type} myMessage'>
+            <span class="message">${mensagem.msg} </span>
+            <span class="hour"> ${mensagem.datetime.slice(11,16)}</span>
+          </p>
+          `
+        } else {
+          historico_mensagens.innerHTML +=
+            `<p class='${mensagem.type}'>
+            <span class="username">${mensagem.username}</span>
+            <span class="message">${mensagem.msg} </span>
+            <span class="hour"> ${mensagem.datetime.slice(11,16)}</span>
+          </p>
+        `
+        }
+      })
+    });
+
+    function enviarmensagem() {
+      this.bodyMessage = {
+        email: localStorage.getItem('EMAIL'),
+        type: 'message',
+        msg: texto_mensagem.value,
+        username: localStorage.getItem('USERNAME') ?
+          localStorage.getItem('USERNAME').split(' ')[0] : 'anonimous',
+        filename: localStorage.getItem('IMAGE_URL')
+      }
+
+      socket.emit("enviar mensagem", this.bodyMessage, function () {
+        texto_mensagem.value = '';
+      });
+
+      historico_mensagens.innerHTML += `
+      <p class='${this.bodyMessage.type} myMessage'>
+          <span class="message">${this.bodyMessage.msg} </span>
+          <span class="hour"> ${dateNow().slice(11,16)} </span>
+      </p>
+      `
+    }
+
+    socket.on("atualizar mensagens", function (mensagem) {
+      console.log('user data', mensagem)
+      console.log({
+        icon: `${BASE_URL}/uploads/${mensagem.filename}`
+      })
+      new Notification(`${mensagem.username} te enviou uma mensagem!`, {
+        icon: `${BASE_URL}/uploads/${mensagem.filename}`
+      })
+      historico_mensagens.innerHTML += `
+      <p class='${mensagem.type}'>
+          <span class="username">${mensagem.username}</span>
+          <span class="message">${mensagem.msg} </span>
+          <span class="hour"> [${mensagem.datetime.slice(11,16)}] </span>
+      </p>
+      `
+    });
+  </script>
+</head>
+
+<body>
+  <header>
+    <div>
+      <img src="./src/images/logo.jpg" alt="Cérebro trabalhando com engrenagens" title="Logo">
+    </div>
+    <nav>
+
+      <a href="./index.html">INICIO</a>
+      |
+      <a href="./jogos.html">JOGOS</a>
+      |
+      <a href="./blog.html">Blog</a>
+      |
+      <a href="./sobre.html">SOBRE</a>
+
+      <a href="./profile.html">Perfil</a>
+
+    </nav>
+  </header>
+  <main>
+    <div id="historico_mensagens"></div>
+    <form>
+      <input type='text' id='texto_mensagem' name='texto_mensagem' autocomplete="off" />
+      <button type='button' onclick="enviarmensagem()">Enviar mensagem</button>
+    </form>
+  </main>
+  <footer>
+    <div>
+      &copy; 2021 Todos os direitos reservados | <a target="_blank" href="https://github.com/LucasTI79"> Lucas Feitosa
+        Alves 2021</a>
+    </div>
+  </footer>
+
+</body>
+
+</html>
+<script>
+  document.getElementById('texto_mensagem').addEventListener('keydown', function (e) {
+    if (e.keyIdentifier == 'U+000A' || e.keyIdentifier == 'Enter' || e.keyCode == 13) {
+      if (e.target.nodeName == 'INPUT' && e.target.type == 'text') {
+        e.preventDefault();
+        enviarmensagem();
+        return false;
+      }
+    }
+  }, true);
+
+  (async () => {
+
+    // Verifica se o browser suporta notificações
+    if (!("Notification" in window)) {
+      console.log("Este browser não suporta notificações de Desktop");
+    }
+
+    // Let's check whether notification permissions have already been granted
+    else if (Notification.permission === "granted") {
+      // If it's okay let's create a notification
+      console.log('Notificações ativadas!')
+    }
+
+    // Otherwise, we need to ask the user for permission
+    else if (Notification.permission !== 'denied') {
+      Notification.requestPermission(function (permission) {
+        // If the user accepts, let's create a notification
+        if (permission === "granted") {
+          alert('Notificações ativadas!')
+        }
+      });
+    }
+
+    // At last, if the user has denied notifications, and you
+    // want to be respectful there is no need to bother them any more.
+
+  })();
+</script>

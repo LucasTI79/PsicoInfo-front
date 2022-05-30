@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PsicoInfo</title>
+  <link rel="shortcut icon" href="./src/images/logo.jpg" type="image/x-icon">
+  <!-- Estilos -->
+  <link rel="stylesheet" href="./src/css/global.css">
+  <link rel="stylesheet" href="./src/css/componentes.css">
+  <link rel="stylesheet" href="./src/css/profile.css">
+  <!-- Fontes -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+    integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+  <!-- Scripts -->
+  <script src="./configs/index.js"></script>
+  <script src="./src/services/auth.js"></script>
+  <script src="./src/services/children.js"></script>
+  <script src="./src//Utils/index.js"></script>
+  <script type="text/javascript" src="https://www.chartjs.org/dist/2.8.0/Chart.min.js"></script>
+
+</head>
+
+<body>
+  <main>
+    <aside>
+      <h2 id="name"></h2>
+      <div>
+        <img id="img_profile" src="" alt="image profile" title="">
+      </div>
+      <div class="actions">
+        <button type="button" onclick="window.location = './chat.html'">CHAT
+          <i class="fas fa-comments"></i>
+        </button>
+        &nbsp;
+        <button type="button" style="margin-top: 20px" onclick="signout()">SIGNOUT
+          <i class="fas fa-sign-out-alt"></i>
+        </button>
+      </div>
+    </aside>
+    <div>
+      <div class="childrens">
+        <label for="cbo_filhos">Filhos</label>
+        <select id="cbo_filhos" onchange="handleChangeChildren(this)"></select>
+      </div>
+      <h3><span id="name_children"></span> já completou <span id="n_levels">0</span> níveis no total <button
+          id="handleLevels-btn" onclick="handleLevels()">Ver
+          níveis</button></h3>
+      <div class="graph">
+        <canvas id="canvas_grafico"></canvas>
+      </div>
+      <div class="table">
+        <table>
+          <thead>
+            <th>Data da conclusão</th>
+            <th>Categoria do Jogo</th>
+            <th>Nome do Jogo</th>
+            <th>Nível</th>
+            <th>Dificuldade</th>
+          </thead>
+          <tbody id="tbodyNiveis">
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <div>
+      &copy; 2021 Todos os direitos reservados | <a target="_blank" href="https://github.com/LucasTI79"> Lucas Feitosa
+        Alves 2021</a>
+    </div>
+  </footer>
+</body>
+
+</html>
+<script>
+  window.onload = async () => {
+    document.getElementById('name').innerHTML = localStorage.USERNAME;
+    const image = document.getElementById('img_profile');
+    image.src = 'http://localhost:3333/uploads/' + localStorage.IMAGE_URL;
+    image.title = localStorage.USERNAME;
+
+    if (!localStorage.USERNAME || !localStorage.IMAGE_URL || !localStorage.USER_ID) {
+      return window.location = './login.html'
+    }
+
+    async function handleChildrens(childrens) {
+      childrens.forEach(({
+        nameChildren,
+        idChildren
+      }) => {
+
+        cbo_filhos.innerHTML += `
+          <option value='${idChildren}'>${nameChildren.split(' ')[0]}</option>
+        `
+
+      })
+
+      name_children.innerHTML = cbo_filhos.options[cbo_filhos.options.selectedIndex].innerHTML;
+
+      await fetchLevelsCount(cbo_filhos.value);
+
+    }
+
+    await listChildrensByIdParent(localStorage.USER_ID, handleChildrens);
+
+  }
+
+  function plotarGrafico(resposta) {
+    console.log('iniciando plotagem do gráfico...');
+    console.log('resposta', resposta)
+    var dados = {
+      labels: [],
+      datasets: [{
+          data: [],
+          backgroundColor: [
+            'rgba(255, 159, 64, 0.6)',
+            'rgba(255, 205, 86, 0.6)',
+            'rgba(75, 192, 192, 0.6)',
+            'rgba(54, 162, 235, 0.6)',
+            'rgba(153, 102, 255, 0.6)',
+            'rgba(201, 203, 207, 0.6)',
+            'rgba(255, 99, 132, 0.6)',
+          ],
+          borderColor: [
+            'rgb(255, 159, 64)',
+            'rgb(255, 205, 86)',
+            'rgb(75, 192, 192)',
+            'rgb(54, 162, 235)',
+            'rgb(153, 102, 255)',
+            'rgb(201, 203, 207)',
+            'rgb(255, 99, 132)',
+          ],
+          borderWidth: 1,
+        },
+
+      ]
+    };
+
+    for (i = 0; i < resposta.length; i++) {
+      var registro = resposta[i];
+      name_children.innerHTML = registro["Nome Criança"];
+      dados.labels.push(registro.categoria);
+      dados.datasets[0].data.push(registro.concluidos);
+    }
+
+    var ctx = canvas_grafico.getContext('2d');
+    window.grafico_linha = new Chart(ctx, {
+      type: 'bar',
+      data: dados,
+      //Configurações do gráfico
+      options: {
+        responsive: true,
+        animation: {
+          duration: 500
+        },
+        hoverMode: 'index',
+        stacked: false,
+        legend: false,
+        title: {
+          display: true,
+          text: 'Progresso dos jogos',
+          fontSize: '16'
+        },
+        scales: {
+          yAxes: [{
+            type: 'linear',
+            display: false,
+            ticks: {
+              // beginAtZero: true,
+              // max: 100,
+              min: 0
+            },
+
+            gridLines: {
+              drawOnChartArea: true,
+            },
+          }],
+        }
+      }
+    });
+
+    window.grafico_linha.style = '';
+  }
+
+  function fetchLevels(idChildren) {
+    console.log(`http://localhost:3333/levels/${idChildren}`)
+    fetch(`http://localhost:3333/levels/${idChildren}`)
+      .then(res => {
+        if (res.ok) {
+          return res.json()
+        } else {
+          throw new Error()
+        }
+      })
+      .then(json => {
+        console.log('JSON', json)
+        tbodyNiveis.innerHTML = '';
+        json.length && json.forEach(level => {
+          tbodyNiveis.innerHTML +=
+            `
+            <tr>
+              <td>${formatDate(level["Concluído em"])}</td>
+              <td>${level.Categoria}</td>
+              <td>${level.Jogo}</td>
+              <td>${level["Game level"]}</td>
+              <td>${level.Dificuldade}</td>
+            </tr>
+          `
+        })
+      })
+      .catch(err => {
+        // console.log('err', err)
+        alert('Houve um erro ao buscar o progresso');
+      })
+  }
+
+  function fetchLevelsCount(idChildren) {
+    console.log(`http://localhost:3333/levels/${idChildren}/count`);
+    fetch(`http://localhost:3333/levels/${idChildren}/count`)
+      .then(res => {
+        if (res.ok) {
+          return res.json()
+        } else {
+          throw new Error()
+        }
+      })
+      .then(json => {
+        json.length && (n_levels.innerHTML = json[0].total, plotarGrafico(json));
+      })
+      .catch(err => {
+        // console.log('err', err)
+        alert('Houve um erro ao buscar o progresso')
+      })
+  }
+
+  async function handleLevels() {
+    const graph = document.getElementsByClassName('graph')[0];
+    const table = document.getElementsByClassName('table')[0];
+    await fetchLevels(cbo_filhos.value);
+    if (graph.style.display == 'none') {
+      graph.style.display = 'block';
+      table.style.display = 'none';
+    } else {
+      graph.style.display = 'none';
+      table.style.display = 'block';
+    }
+  }
+
+  async function handleChangeChildren(cbo_childrens) {
+    const graph = document.getElementsByClassName('graph')[0];
+    const table = document.getElementsByClassName('table')[0];
+    name_children.innerHTML = cbo_filhos.options[cbo_filhos.options.selectedIndex].innerHTML;
+    if (graph.style.display == 'none') {
+      await fetchLevels(cbo_childrens.value);
+    } else {
+      await fetchLevelsCount(cbo_childrens.value);
+    }
+  }
+</script>
